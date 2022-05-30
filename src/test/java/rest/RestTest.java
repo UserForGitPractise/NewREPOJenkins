@@ -1,7 +1,9 @@
+package rest;
+
 import io.restassured.RestAssured;
 import org.testng.annotations.Test;
 
-public class Test1 {
+public class RestTest {
 
     @Test
     public static void test1 (){
