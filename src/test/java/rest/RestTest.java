@@ -71,6 +71,12 @@ public class RestTest {
     public void deleteUser (){
         api.deleteUser();
     }
+    @Test
+    public void delayedResponse (){
+        assertThat(api.getDelayedUsersResponse()).extracting(Users::getEmail).containsExactly("george.bluth@reqres.in", "janet.weaver@reqres.in", "emma.wong@reqres.in","eve.holt@reqres.in","charles.morris@reqres.in","tracey.ramos@reqres.in");
+        assertThat(api.getDelayedUsersResponse()).extracting(Users::getfirstName).containsExactly("George", "Janet", "Emma", "Eve", "Charles", "Tracey");
+
+    }
 
 
 }

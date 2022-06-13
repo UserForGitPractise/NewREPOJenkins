@@ -2,17 +2,24 @@ package utils;
 
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.config.HttpClientConfig;
+import io.restassured.config.RestAssuredConfig;
 import io.restassured.http.ContentType;
 import io.restassured.http.Cookie;
 import io.restassured.http.Cookies;
+import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import org.apache.http.params.CoreConnectionPNames;
 import pojos.*;
 import steps.UserSteps;
 
 import java.util.List;
 
-import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static utils.UserGenerator.createSimpleUser;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class RestWrapper {
     private static final String BASE_URL = "https://reqres.in/api/";
@@ -69,7 +76,7 @@ public class RestWrapper {
                 .getList("data", Users.class);
     }
 
-    public Users getSingleUser(){
+    public Users getSingleUser() {
         return given().spec(REQ_SPEC).basePath("users/2")
                 .when()
                 .get()
@@ -78,22 +85,51 @@ public class RestWrapper {
                 .jsonPath()
                 .getObject("data", Users.class);
     }
-    public UpdateUserResponce updateUser(){
+
+    public UpdateUserResponce updateUser() {
         UpdateUserRequest ur = UserGenerator.updateUser();
-        return  given().spec(REQ_SPEC)
+        return given().spec(REQ_SPEC)
                 .basePath("users/2")
                 .body(ur)
                 .when().put().then().extract().as(UpdateUserResponce.class);
     }
 
-    public UpdateUserResponce patchUser(){
+    public UpdateUserResponce patchUser() {
         UpdateUserRequest ur = UserGenerator.updateUser();
-        return  given().spec(REQ_SPEC)
+        return given().spec(REQ_SPEC)
                 .basePath("users/2")
                 .body(ur)
                 .when().patch().then().extract().as(UpdateUserResponce.class);
     }
-    public void deleteUser(){
+
+    public void deleteUser() {
         given().spec(REQ_SPEC).basePath("users/2").when().delete().then().statusCode(204);
     }
+
+    public List<Users> getDelayedUsersResponse() {
+
+        // Установка параметров TimeOut'а
+        RestAssured.config=RestAssuredConfig.config()
+                .httpClient(HttpClientConfig.httpClientConfig()
+                        .setParam("http.socket.timeout",4000)
+                        .setParam("http.connection.timeout", 4000));
+//            return given().config(config).spec(REQ_SPEC)
+//                    .basePath("/api/users?delay=2")
+//                    .when().get()
+//                    .then().extract().jsonPath().getList("data", Users.class);
+
+       return given().config(config).spec(REQ_SPEC)
+                .basePath("/users").log().all()
+                .queryParam("delay", 3)
+                .when().get().then().extract().jsonPath().getList("data", Users.class);
+
+//        try {
+//            Thread.sleep(5000);
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+
+
+    }
+
 }
