@@ -79,7 +79,7 @@ public class RestWrapper {
                 .getObject("data", Users.class);
     }
     public UpdateUserResponce updateUser(){
-        UpdateUserRequest ur = UserGenerator.updateUser();
+        UpdateUserRequest ur = UserGenerator.updateSimpleUser();
         return  given().spec(REQ_SPEC)
                 .basePath("users/2")
                 .body(ur)
@@ -87,7 +87,7 @@ public class RestWrapper {
     }
 
     public UpdateUserResponce patchUser(){
-        UpdateUserRequest ur = UserGenerator.updateUser();
+        UpdateUserRequest ur = UserGenerator.patchSimpleUser();
         return  given().spec(REQ_SPEC)
                 .basePath("users/2")
                 .body(ur)
