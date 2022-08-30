@@ -2,23 +2,18 @@ package rest;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.*;
-import pojos.CreateUserRequest;
 import pojos.CreateUserResponse;
 import pojos.UpdateUserResponce;
 import pojos.Users;
-import steps.UserSteps;
 import utils.RestWrapper;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static steps.UserSteps.*;
 
 
-
-public class RestTest {
+public class RestTests {
 
     private static RestWrapper api;
 
@@ -37,7 +32,7 @@ public class RestTest {
     }
     @Test
     public void createUser() {
-        CreateUserResponse user = RestTest.api.createUser();
+        CreateUserResponse user = RestTests.api.createUser();
         assertThat(user).extracting(CreateUserResponse::getName).isEqualTo(user.getName());
         Assertions.assertThat(user).extracting(CreateUserResponse::getJob).isEqualTo(user.getJob());
     }
