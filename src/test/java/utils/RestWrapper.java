@@ -3,11 +3,9 @@ package utils;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
-import io.restassured.http.Cookie;
 import io.restassured.http.Cookies;
 import io.restassured.specification.RequestSpecification;
 import pojos.*;
-import steps.UserSteps;
 
 import java.util.List;
 
@@ -69,7 +67,7 @@ public class RestWrapper {
                 .getList("data", Users.class);
     }
 
-    public Users getSingleUser(){
+    public Users getSingleUser() {
         return given().spec(REQ_SPEC).basePath("users/2")
                 .when()
                 .get()
@@ -78,22 +76,24 @@ public class RestWrapper {
                 .jsonPath()
                 .getObject("data", Users.class);
     }
-    public UpdateUserResponce updateUser(){
+
+    public UpdateUserResponce updateUser() {
         UpdateUserRequest ur = UserGenerator.updateSimpleUser();
-        return  given().spec(REQ_SPEC)
+        return given().spec(REQ_SPEC)
                 .basePath("users/2")
                 .body(ur)
                 .when().put().then().extract().as(UpdateUserResponce.class);
     }
 
-    public UpdateUserResponce patchUser(){
+    public UpdateUserResponce patchUser() {
         UpdateUserRequest ur = UserGenerator.patchSimpleUser();
-        return  given().spec(REQ_SPEC)
+        return given().spec(REQ_SPEC)
                 .basePath("users/2")
                 .body(ur)
                 .when().patch().then().extract().as(UpdateUserResponce.class);
     }
-    public void deleteUser(){
+
+    public void deleteUser() {
         given().spec(REQ_SPEC).basePath("users/2").when().delete().then().statusCode(204);
     }
 }
