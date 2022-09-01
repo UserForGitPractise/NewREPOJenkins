@@ -59,8 +59,8 @@ public class RestTests {
     }
     @Test
     public void checkPatchUserParameters(){
-        assertThat(api.patchUser()).extracting(UpdateUserResponce::getName).isEqualTo("Nick");
-        assertThat(api.patchUser()).extracting(UpdateUserResponce::getJob).isEqualTo("QA-engineer");
+        assertThat(api.patchUser()).extracting(UpdateUserResponce::getName).isEqualTo("Alex");
+        assertThat(api.patchUser()).extracting(UpdateUserResponce::getJob).isEqualTo("Developer");
     }
     @Test
     public void deleteUser (){
