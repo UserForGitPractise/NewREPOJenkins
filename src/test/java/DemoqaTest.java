@@ -1,6 +1,9 @@
-import UI.demoqa.pages.BasePage;
+import UI.demoqa.pages.ElementCheckBox;
 import UI.demoqa.pages.ElementsTextBox;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -10,29 +13,47 @@ public class DemoqaTest {
 
 
     @BeforeAll
-    public static void chromeDriverSetUp () {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\toosm\\Downloads\\chromedriver_win32\\chromedriver.exe");
+    public static void chromeDriverSetUp() {
+        System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
 
     }
 
     @BeforeEach
-    public void driverStart(){
+    public void driverStart() {
         driver.set(new ChromeDriver());
         //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(12)); - неявное или безусловное ожидание
 
     }
-//    @AfterEach
-//    public void driverQuit(){
-//        if (driver.get() != null) {
-//            driver.get().quit();
-//        }
-//    }
+
+    @AfterEach
+    public void driverQuit() {
+        if (driver.get() != null) {
+            driver.get().quit();
+        }
+    }
+
     @Test
-    public void login (){
+    public void login() {
         new ElementsTextBox(driver.get())
                 .fillInDate()
                 .clickSubmitButton().checkRegisteredUserData();
     }
 
+    @Test
+    public void checkFormsPageElementView() {
+        new ElementCheckBox(driver.get())
+                .checkFormsPageTitle()
+                .checkSuggestionToSelectItemText()
+                .checkFormElementOfPannelToBeOpened();
+    }
+
+    @Test
+    public void fillInThePracticeForm() {
+        new ElementCheckBox(driver.get())
+                .clickForm()
+                .fillTheFormFields()
+        //.clickSubmitButton()
+        ;
+    }
 
 }
