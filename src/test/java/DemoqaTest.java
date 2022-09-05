@@ -6,20 +6,25 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 public class DemoqaTest {
+
 
     ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
 
     @BeforeAll
     public static void chromeDriverSetUp() {
+
         System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
+
 
     }
 
     @BeforeEach
     public void driverStart() {
+
         driver.set(new ChromeDriver());
         //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(12)); - неявное или безусловное ожидание
 
@@ -34,6 +39,7 @@ public class DemoqaTest {
 
     @Test
     public void login() {
+
         new ElementsTextBox(driver.get())
                 .fillInDate()
                 .clickSubmitButton().checkRegisteredUserData();
@@ -52,7 +58,7 @@ public class DemoqaTest {
         new ElementCheckBox(driver.get())
                 .clickForm()
                 .fillTheFormFields()
-        //.clickSubmitButton()
+        .clickSubmitButton()
         ;
     }
 

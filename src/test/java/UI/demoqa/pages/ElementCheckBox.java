@@ -1,9 +1,10 @@
 package UI.demoqa.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Paths;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -21,7 +22,7 @@ public class ElementCheckBox extends BasePage {
 
     private By subjectsField = By.cssSelector("#subjectsInput");
     private By hobbiesField = By.cssSelector("#hobbies-checkbox-1");
-    private By pictureField = By.xpath("");
+    private By pictureField = By.cssSelector("#uploadPicture");
     private By currentAddressField = By.xpath("");
     private By stateField = By.xpath("");
 
@@ -88,22 +89,25 @@ public class ElementCheckBox extends BasePage {
         //  driver.findElement(subjectsField).sendKeys("Math");
         SelectDay selectDay = new SelectDay();
         selectDay.selectDay(driver, "September", 7);
+        String path = String.valueOf(Paths.get("src/main/resources/PicturesToDownload/pic1.png").toAbsolutePath());
+        driver.findElement(pictureField).sendKeys("C:/Users/toosm/IdeaProjects/NewProjectJenkins/src/main/resources/PicturesToDownload/pic1.png");
         return this;
 
     }
-//    public ElementCheckBox clickSubmitButton() {
+    public ElementCheckBox clickSubmitButton() {
 //        JavascriptExecutor executor = (JavascriptExecutor)driver;
 //        executor.executeScript("document.body.style.zoom = '0.6'");
-//        //driver.findElement(By.cssSelector("#submit")).click();
+//        driver.findElement(By.cssSelector("#submit")).click();
 //        Actions actions = new Actions(driver);
 //
 //        actions.moveToElement(driver.findElement(By.cssSelector("#submit"))).click().perform();
 //        executor.executeScript("document.body.style.zoom = '1.0'");
-//        driver.findElement(By.cssSelector(".modal-content")).isDisplayed();
-//        driver.findElement(By.cssSelector("#closeLargeModal")).isDisplayed();
-//        driver.findElement(By.cssSelector("#closeLargeModal")).isEnabled();
-//
-//        return this;
-//    }
+        driver.findElement(By.cssSelector("#submit")).sendKeys(Keys.ENTER);
+        driver.findElement(By.cssSelector(".modal-content")).isDisplayed();
+        driver.findElement(By.cssSelector("#closeLargeModal")).isDisplayed();
+        driver.findElement(By.cssSelector("#closeLargeModal")).isEnabled();
+
+        return this;
+    }
 
 }
