@@ -33,12 +33,10 @@ public class ElementsTextBox extends BasePage {
         super(driver);
         driver.get(BASE_URL);
 
-
         //((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", elementDirectoryButton);
         //waitVisibility(elementDirectoryButton);
         driver.findElement(elementDirectoryButton).click();
         driver.findElement(textBoxElementDirectoryButton).click();
-
     }
     public ElementsTextBox fillInDate(){
         driver.findElement(userNameBox).sendKeys(LOGIN);
@@ -50,7 +48,6 @@ public class ElementsTextBox extends BasePage {
     public ElementsTextBox clickSubmitButton(){
         WebElement button = driver.findElement(submitButton);
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", button);
-        //Thread.sleep(500);
         button.click();
         return this;
     }
@@ -71,7 +68,4 @@ public class ElementsTextBox extends BasePage {
 
         driver.quit();
     }
-
-
-
 }
