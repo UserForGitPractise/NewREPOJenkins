@@ -1,4 +1,4 @@
-package UI.demoqa.pages;
+package web;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;

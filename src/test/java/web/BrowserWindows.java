@@ -1,6 +1,5 @@
-package UI.demoqa.pages;
+package web;
 
-import UI.demoqa.pages.BasePage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
