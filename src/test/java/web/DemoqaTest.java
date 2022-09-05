@@ -18,7 +18,7 @@ public class DemoqaTest {
     @BeforeAll
     public static void chromeDriverSetUp() {
 
-        System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver_linux");
 
 
     }
