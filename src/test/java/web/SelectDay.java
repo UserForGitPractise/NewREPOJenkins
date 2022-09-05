@@ -5,7 +5,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 public class SelectDay {
-    @Test
     public void selectDay(WebDriver driver, String month, int day) {
 
         driver.findElement(By.cssSelector("#dateOfBirthInput")).click();
