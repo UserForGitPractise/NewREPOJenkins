@@ -2,9 +2,7 @@ package UI.demoqa.pages;
 
 import org.openqa.selenium.*;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Paths;
+import java.io.File;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -89,11 +87,13 @@ public class ElementCheckBox extends BasePage {
         //  driver.findElement(subjectsField).sendKeys("Math");
         SelectDay selectDay = new SelectDay();
         selectDay.selectDay(driver, "September", 7);
-        String path = String.valueOf(Paths.get("src/main/resources/PicturesToDownload/pic1.png").toAbsolutePath());
-        driver.findElement(pictureField).sendKeys("C:/Users/toosm/IdeaProjects/NewProjectJenkins/src/main/resources/PicturesToDownload/pic1.png");
+
+//        driver.findElement(pictureField).sendKeys("C:/Users/toosm/IdeaProjects/NewProjectJenkins/src/main/resources/PicturesToDownload/pic1.png");
+        driver.findElement(pictureField).sendKeys(new File("src/main/resources/PicturesToDownload/pic1.png").getAbsolutePath());
         return this;
 
     }
+
     public ElementCheckBox clickSubmitButton() {
 //        JavascriptExecutor executor = (JavascriptExecutor)driver;
 //        executor.executeScript("document.body.style.zoom = '0.6'");
