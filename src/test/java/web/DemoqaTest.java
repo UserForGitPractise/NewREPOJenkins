@@ -6,9 +6,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 public class DemoqaTest {
 
+    ChromeOptions options = new ChromeOptions();
 
     ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
@@ -23,8 +25,8 @@ public class DemoqaTest {
 
     @BeforeEach
     public void driverStart() {
-
-        driver.set(new ChromeDriver());
+        options.addArguments("--headless","--no-gpu");
+        driver.set(new ChromeDriver(options));
         //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(12)); - неявное или безусловное ожидание
 
     }
