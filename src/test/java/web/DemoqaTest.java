@@ -16,23 +16,23 @@ public class DemoqaTest {
 
     @BeforeAll
     public static void chromeDriverSetUp() {
-        try {
-            if (System.getProperty("driver").equals("linux")) {
-                System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver_linux");
-            } else if (System.getProperty("driver").equals("windows")) {
-                System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver.exe");
-            }
-        } catch (NullPointerException e){
-            System.out.println("OC for chromedriver is not set up");
+//        try {
+//            if (System.getProperty("driver").equals("linux")) {
+//                System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver_linux");
+//            } else if (System.getProperty("driver").equals("windows")) {
+//                System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver.exe");
+//            }
+//        } catch (NullPointerException e){
+//            System.out.println("OC for chromedriver is not set up");
+//        }
+
+
+        if (System.getProperty("driver").equals("windows") | !isNull(System.getProperty("driver"))) {
+            System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver.exe");
         }
-
-
-//        if (System.getProperty("driver").equals("windows") | !isNull(System.getProperty("driver"))) {
-//            System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver.exe");
-//        }
-//        else {
-//            System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver_linux");
-//        }
+        else {
+            System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver_linux");
+        }
 
 
     }
