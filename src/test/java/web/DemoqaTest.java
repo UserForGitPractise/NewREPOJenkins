@@ -19,13 +19,19 @@ public class DemoqaTest {
 
     @BeforeAll
     public static void chromeDriverSetUp() {
-
-        if (System.getProperty("driver").equals("windows") | !isNull(System.getProperty("driver"))) {
-            System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver.exe");
-        }
-        else {
+        if (isNull(System.getProperty("driver"))) {
             System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver_linux");
         }
+        else if (System.getProperty("driver").equals("windows")) {
+            System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver.exe");
+        }
+
+//        if (System.getProperty("driver").equals("windows") | !isNull(System.getProperty("driver"))) {
+//            System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver.exe");
+//        }
+//        else {
+//            System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver_linux");
+//        }
 
 
     }
