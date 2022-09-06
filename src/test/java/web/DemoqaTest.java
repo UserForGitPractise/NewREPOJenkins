@@ -27,7 +27,7 @@ public class DemoqaTest {
 //        }
 
 
-        if (System.getProperty("driver").equals("windows") | !isNull(System.getProperty("driver"))) {
+        if (System.getProperty("driver").equals("windows")) {
             System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver.exe");
         }
         else {
