@@ -1,15 +1,12 @@
 package web;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 import static java.util.Objects.isNull;
-
+@Tag("web-tests")
 public class DemoqaTest {
 
     ChromeOptions options = new ChromeOptions();
