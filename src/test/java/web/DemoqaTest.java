@@ -18,13 +18,14 @@ public class DemoqaTest {
 
 
     @BeforeAll
-    public static void chromeDriverSetUp() {
-        if (isNull(System.getProperty("driver"))) {
+    public static void chromeDriverSetUp() throws Exception {
+        if (System.getProperty("driver").equals("linux")) {
             System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver_linux");
         }
         else if (System.getProperty("driver").equals("windows")) {
             System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver.exe");
         }
+        else throw new Exception("Параметр OC для chromedriver не задан");
 
 //        if (System.getProperty("driver").equals("windows") | !isNull(System.getProperty("driver"))) {
 //            System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver.exe");
