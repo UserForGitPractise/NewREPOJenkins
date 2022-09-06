@@ -8,6 +8,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import static java.util.Objects.isNull;
+
 public class DemoqaTest {
 
     ChromeOptions options = new ChromeOptions();
@@ -17,8 +19,8 @@ public class DemoqaTest {
 
     @BeforeAll
     public static void chromeDriverSetUp() {
-        String s = System.getProperty("driver");
-        if (System.getProperty("driver").equals("windows")) {
+
+        if (System.getProperty("driver").equals("windows") | !isNull(System.getProperty("driver"))) {
             System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver.exe");
         }
         else {
