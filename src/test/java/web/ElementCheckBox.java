@@ -86,7 +86,7 @@ public class ElementCheckBox extends BasePage {
         //driver.findElement(pictureField).sendKeys("Math");
         //  driver.findElement(subjectsField).sendKeys("Math");
         SelectDay selectDay = new SelectDay();
-        selectDay.selectDay(driver, "September", 7);
+        //selectDay.selectDay(driver, "September", 7);
 
 //        driver.findElement(pictureField).sendKeys("C:/Users/toosm/IdeaProjects/NewProjectJenkins/src/main/resources/PicturesToDownload/pic1.png");
         driver.findElement(pictureField).sendKeys(new File("src/main/resources/PicturesToDownload/pic1.png").getAbsolutePath());

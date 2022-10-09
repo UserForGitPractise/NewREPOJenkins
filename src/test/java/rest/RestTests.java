@@ -9,12 +9,12 @@ import pojos.Users;
 import utils.RestWrapper;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Tag("rest-api-tests")
 public class RestTests {
-
     private static RestWrapper api;
 
     @BeforeAll
@@ -26,6 +26,7 @@ public class RestTests {
     @Test
     public void getUsers(){
         List<Users> user = api.getUsers();
+
         assertThat(user)
                 .extracting(Users::getEmail)
                 .contains("janet.weaver@reqres.in");
