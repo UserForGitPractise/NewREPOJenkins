@@ -1,21 +1,29 @@
 package web;
 
 import org.junit.jupiter.api.*;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-import static java.util.Objects.isNull;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
+
+
 @Tag("web-tests")
-public class DemoqaTest {
+public class DemoqaTest{
+
 
     ChromeOptions options = new ChromeOptions();
 
     ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
 
+
     @BeforeAll
     public static void chromeDriverSetUp() {
+
         try {
             if (System.getProperty("driver").equals("linux")) {
                 System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver_linux");
@@ -27,19 +35,11 @@ public class DemoqaTest {
         }
 
 
-//        if (System.getProperty("driver").equals("windows")) {
-//            System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver.exe");
-//        }
-//        else {
-//            System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver_linux");
-//        }
-
-
     }
 
     @BeforeEach
     public void driverStart() {
-        options.addArguments("--headless","--no-gpu");
+        //options.addArguments("--headless","--no-gpu");
         driver.set(new ChromeDriver(options));
         //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(12)); - неявное или безусловное ожидание
 
@@ -54,6 +54,8 @@ public class DemoqaTest {
 
     @Test
     public void login() {
+
+        driver.get().get("https://google.com");
 
         new ElementsTextBox(driver.get())
                 .fillInDate()
