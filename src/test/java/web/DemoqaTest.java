@@ -39,7 +39,7 @@ public class DemoqaTest{
 
     @BeforeEach
     public void driverStart() {
-        //options.addArguments("--headless","--no-gpu");
+        options.addArguments("--headless","--no-gpu");
         driver.set(new ChromeDriver(options));
         //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(12)); - неявное или безусловное ожидание
 
