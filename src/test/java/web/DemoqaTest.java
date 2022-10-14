@@ -48,8 +48,8 @@ public class DemoqaTest{
     @BeforeEach
     public void driverStart() throws MalformedURLException {
        // options.addArguments("--headless","--no-gpu");
-        ChromeOptions options1 = new ChromeOptions();
-        driver.set(new RemoteWebDriver(new URL("http://localhost:4445/wd/hub"),options1));
+        //ChromeOptions options1 = new ChromeOptions();
+       // driver.set(new RemoteWebDriver(new URL("http://localhost:4445/wd/hub"),options1));
         driver.set(new ChromeDriver(options));
 
 //        //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(12)); - неявное или безусловное ожидание
