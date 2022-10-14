@@ -1,5 +1,6 @@
 package utils;
 
+import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
@@ -35,6 +36,7 @@ public class RestWrapper {
         return new RestWrapper(cookies);
     }
 
+    @Step("Создание пользователя")
     public CreateUserResponse createUser() {
         CreateUserRequest rq = createSimpleUser();
 
@@ -53,6 +55,7 @@ public class RestWrapper {
         return rs;
     }
 
+    @Step("Получение списка пользователей")
     public List<Users> getUsers() {
         return RestAssured.given().log().body().spec(REQ_SPEC)
                 .basePath("users")

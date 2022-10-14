@@ -3,6 +3,7 @@ package pojos;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.qameta.allure.Step;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 
@@ -22,10 +23,15 @@ public class Users {
         this.id = id;
     }
 
+    @Step ("Getting user email")
     public String getEmail() {
         return email;
     }
 
+    @Step("Возвращено false")
+    public boolean falseReturner(){
+        return false;
+    }
     public void setEmail(String email) {
         this.email = email;
     }
