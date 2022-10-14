@@ -1,5 +1,6 @@
 package web;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.*;
 
 import java.io.File;
@@ -66,6 +67,7 @@ public class ElementCheckBox extends BasePage {
 
     }
 
+    @Step("STEP!!!")
     public ElementCheckBox clickForm() {
         driver.findElement(selectedPannelElementOfItem).click();
         return this;
