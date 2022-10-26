@@ -1,4 +1,4 @@
-package utils;
+package rest.utils;
 
 import io.qameta.allure.Step;
 import io.restassured.RestAssured;
@@ -6,41 +6,38 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.http.Cookies;
 import io.restassured.specification.RequestSpecification;
-import pojos.*;
+import rest.pojos.*;
+import rest.pojos.*;
 
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
-import static utils.UserGenerator.createSimpleUser;
+import static org.hamcrest.Matchers.equalTo;
 
 public class RestWrapper {
     private static final String BASE_URL = "https://reqres.in/api/";
     private static RequestSpecification REQ_SPEC;
-    private Cookies cookie;
+    private String token;
 
-    private RestWrapper(Cookies cookie) {
-        this.cookie = cookie;
-        REQ_SPEC = new RequestSpecBuilder().setBaseUri("https://reqres.in/api/")
+    private RestWrapper(String token) {
+        this.token = token;
+        REQ_SPEC = new RequestSpecBuilder().setBaseUri(BASE_URL)
                 .setContentType(ContentType.JSON)
-
-                .addCookies(cookie)
+                .addHeader("Authorization", "Bearer " + token)
                 .build();
     }
 
     public static RestWrapper loginAs(String login, String password) {
-        Cookies cookies = given().baseUri("https://reqres.in/api/").basePath("login/").contentType(ContentType.JSON)
+        String token = given().baseUri(BASE_URL).basePath("login/").contentType(ContentType.JSON)
                 .body(new UserLogin(login, password))
                 .when().post()
-                .getDetailedCookies();
-
-        return new RestWrapper(cookies);
+                .then().extract().jsonPath().get("token");
+        return new RestWrapper(token);
     }
 
-    @Step("Создание пользователя")
-    public CreateUserResponse createUser() {
-        CreateUserRequest rq = createSimpleUser();
-
-        CreateUserResponse rs = RestAssured.given().spec(REQ_SPEC)
+    @Step("Create User")
+    public CreateUserResponse createUser( CreateUserRequest rq) {
+        return RestAssured.given().spec(REQ_SPEC)
                 .basePath("users/")
                 .body(rq)
                 .when()
@@ -50,20 +47,16 @@ public class RestWrapper {
                 .all()
                 .statusCode(201)
                 .extract()
-                .body()
                 .as(CreateUserResponse.class);
-        return rs;
     }
 
-    @Step("Получение списка пользователей")
+    @Step("Get user list")
     public List<Users> getUsers() {
         return RestAssured.given().log().body().spec(REQ_SPEC)
                 .basePath("users")
                 .when()
                 .get()
-
                 .then()
-                //.log().body()
                 .statusCode(200)
                 .extract()
                 .jsonPath()
@@ -93,10 +86,16 @@ public class RestWrapper {
         return given().spec(REQ_SPEC)
                 .basePath("users/2")
                 .body(ur)
-                .when().patch().then().extract().as(UpdateUserResponce.class);
+                .when().patch()
+                .then().extract().as(UpdateUserResponce.class);
     }
 
     public void deleteUser() {
-        given().spec(REQ_SPEC).basePath("users/2").when().delete().then().statusCode(204);
+        given()
+                .spec(REQ_SPEC).basePath("users/2")
+                .when()
+                .delete()
+                .then()
+                .statusCode(204);
     }
 }

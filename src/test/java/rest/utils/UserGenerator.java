@@ -1,7 +1,7 @@
-package utils;
+package rest.utils;
 
-import pojos.CreateUserRequest;
-import pojos.UpdateUserRequest;
+import rest.pojos.CreateUserRequest;
+import rest.pojos.UpdateUserRequest;
 
 public class UserGenerator {
     public static CreateUserRequest createSimpleUser (){

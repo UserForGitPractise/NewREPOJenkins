@@ -1,6 +1,9 @@
-package pojos;
+package rest.pojos;
 
-public class CreateUserRequest {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class UpdateUserResponce {
     private String name;
     private String job;
 
