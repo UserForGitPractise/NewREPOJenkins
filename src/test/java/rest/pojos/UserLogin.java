@@ -1,4 +1,4 @@
-package pojos;
+package rest.pojos;
 
 public class UserLogin {
 

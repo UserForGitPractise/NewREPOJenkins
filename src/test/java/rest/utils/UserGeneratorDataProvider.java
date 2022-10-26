@@ -1,9 +1,7 @@
-package utils;
+package rest.utils;
 
-import pojos.CreateUserRequest;
+import rest.pojos.CreateUserRequest;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Stream;
 
 public  class UserGeneratorDataProvider {
