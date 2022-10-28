@@ -1,7 +1,8 @@
-package web;
+package web.selenium.pages;
 
 import io.qameta.allure.Step;
 import org.openqa.selenium.*;
+import web.selenium.SelectDay;
 
 import java.io.File;
 
@@ -91,7 +92,7 @@ public class ElementCheckBox extends BasePage {
         //selectDay.selectDay(driver, "September", 7);
 
 //        driver.findElement(pictureField).sendKeys("C:/Users/toosm/IdeaProjects/NewProjectJenkins/src/main/resources/PicturesToDownload/pic1.png");
-        driver.findElement(pictureField).sendKeys(new File("src/main/resources/PicturesToDownload/pic1.png").getAbsolutePath());
+        driver.findElement(pictureField).sendKeys(new File("src/main/resources/qweqweqwe.png").getAbsolutePath());
         return this;
 
     }
