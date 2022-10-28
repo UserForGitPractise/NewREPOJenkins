@@ -48,7 +48,7 @@ public class DemoqaTest{
     @AfterEach
     public void driverQuit() {
         if (driver.get() != null) {
-           // driver.get().quit();
+            driver.get().quit();
         }
     }
 
