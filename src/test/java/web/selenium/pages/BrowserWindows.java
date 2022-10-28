@@ -1,21 +1,22 @@
 package web.selenium.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import com.codeborne.selenide.SelenideElement;
 import web.selenium.NewTab;
-import web.selenium.pages.BasePage;
+
+import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Selenide.open;
 
 public class BrowserWindows extends BasePage {
-    private By browserWindowsDirectory = By.xpath("//*[text()='Browser Windows' and @class='text']");
-    private By newTabButton = By.xpath("//button[@id='tabButton']");
+    private SelenideElement browserWindowsDirectory = $x("//*[text()='Browser Windows' and @class='text']");
+    private SelenideElement newTabButton = $x("//button[@id='tabButton']");
 
-    public BrowserWindows(WebDriver driver) {
-        super(driver);
-        driver.get(BASE_URL);
-        driver.findElement(browserWindowsDirectory).click();
+    public BrowserWindows() {
+        open(BASE_URL);
+        browserWindowsDirectory.click();
     }
-    public NewTab createNewTab (){
-        driver.findElement(newTabButton).click();
-        return new NewTab(driver);
+
+    public NewTab createNewTab() {
+        newTabButton.click();
+        return new NewTab();
     }
 }
