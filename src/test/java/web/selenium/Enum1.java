@@ -1,4 +1,4 @@
-package web;
+package web.selenium;
 
 enum Enum1 {
     MONDAY{

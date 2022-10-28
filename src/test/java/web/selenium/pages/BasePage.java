@@ -1,4 +1,4 @@
-package web;
+package web.selenium.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;

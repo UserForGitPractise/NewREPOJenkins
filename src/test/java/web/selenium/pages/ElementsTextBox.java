@@ -1,4 +1,4 @@
-package web;
+package web.selenium.pages;
 
 
 import org.junit.jupiter.api.*;
@@ -49,7 +49,7 @@ public class ElementsTextBox extends BasePage {
         button.click();
         return this;
     }
-    public void checkRegisteredUserData(){
+    public ElementsTextBox checkRegisteredUserData(){
         waitVisibility(By.xpath("//div[@class='border col-md-12 col-sm-12']"));
         Assertions.assertDoesNotThrow(
                 ()-> wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='border col-md-12 col-sm-12']")))
@@ -64,6 +64,6 @@ public class ElementsTextBox extends BasePage {
         assertThat(listOfUserData.get(2).getText()).isEqualTo("Current Address :" + CURRENTADDRESS);
         assertThat(listOfUserData.get(3).getText()).isEqualTo("Permananet Address :" + PERMANENTADDRESS);
 
-        driver.quit();
+        return this;
     }
 }

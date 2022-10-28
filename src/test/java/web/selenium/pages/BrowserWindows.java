@@ -1,7 +1,9 @@
-package web;
+package web.selenium.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import web.selenium.NewTab;
+import web.selenium.pages.BasePage;
 
 public class BrowserWindows extends BasePage {
     private By browserWindowsDirectory = By.xpath("//*[text()='Browser Windows' and @class='text']");
