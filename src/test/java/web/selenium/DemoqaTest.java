@@ -45,7 +45,7 @@ public class DemoqaTest{
 //        //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(12)); - неявное или безусловное ожидание
     }
 
-    //
+
     @AfterEach
     public void driverQuit() {
         if (driver.get() != null) {
