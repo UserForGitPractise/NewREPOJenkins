@@ -6,7 +6,7 @@ public class NewTab extends BasePage {
 
     public NewTab() {
 //        super(driver);
-        //
+
     }
 
 
