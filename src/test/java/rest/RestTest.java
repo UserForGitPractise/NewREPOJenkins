@@ -8,13 +8,12 @@ import pojos.CreateUserRequest;
 import pojos.CreateUserResponse;
 import pojos.UpdateUserResponce;
 import pojos.Users;
-import steps.UserSteps;
 import utils.RestWrapper;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static steps.UserSteps.*;
+
 
 
 
