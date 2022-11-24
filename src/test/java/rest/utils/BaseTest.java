@@ -7,7 +7,6 @@ import io.restassured.specification.RequestSpecification;
 public abstract class BaseTest {
     protected static final String BASE_URL = "https://reqres.in/api";
     protected RequestSpecification REQ_SPEC;
-    protected String token;
 
     protected abstract String getPath();
     public BaseTest(String token) {
