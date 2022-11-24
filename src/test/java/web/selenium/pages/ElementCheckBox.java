@@ -1,46 +1,42 @@
 package web.selenium.pages;
 
+import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.WebDriverRunner;
 import io.qameta.allure.Step;
-import org.openqa.selenium.*;
-import web.selenium.SelectDay;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 
 import java.io.File;
 
+import static com.codeborne.selenide.Selenide.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ElementCheckBox extends BasePage {
-    private By baseTabButtonForms = By.xpath("//*[text()='Forms']");
-    private By pageTitleName = By.cssSelector(".main-header");
-    private By selectItemSuggestionText = By.xpath("//div[@class='row']/div[@class='col-12 mt-4 col-md-6']");
-    private By selectedPannelItem;
+    private SelenideElement baseTabButtonForms = $x("//*[text()='Forms']");
+    private SelenideElement pageTitleName = $(".main-header");
+    private SelenideElement selectItemSuggestionText = $x("//div[@class='row']/div[@class='col-12 mt-4 col-md-6']");
+    private SelenideElement selectedPannelItem;
 
-    private By firstNameField = By.cssSelector("#firstName");
-    private By lastNameField = By.cssSelector("#lastName");
-    private By emailField = By.cssSelector("#userEmail");
-    private By genderRadioButton = By.cssSelector("#gender-radio-1");
-    private By mobileField = By.cssSelector("#userNumber");
+    private SelenideElement firstNameField = $("#firstName");
+    private SelenideElement lastNameField =$("#lastName");
+    private SelenideElement emailField = $("#userEmail");
+    private SelenideElement genderRadioButton = $("#gender-radio-1");
+    private SelenideElement mobileField = $("#userNumber");
+    private SelenideElement subjectsField = $("#subjectsInput");
+    private SelenideElement hobbiesField = $("#hobbies-checkbox-1");
+    private SelenideElement pictureField = $("#uploadPicture");
+    private SelenideElement currentAddressField = $x("");
+    private SelenideElement stateField = $x("");
 
-    private By subjectsField = By.cssSelector("#subjectsInput");
-    private By hobbiesField = By.cssSelector("#hobbies-checkbox-1");
-    private By pictureField = By.cssSelector("#uploadPicture");
-    private By currentAddressField = By.xpath("");
-    private By stateField = By.xpath("");
-
-    public ElementCheckBox(WebDriver driver) {
-
-        super(driver);
-        String xPathOfSelectedPannelElementOfItem = "//li/span[@class='text' and text()='Practice Form']";
-        selectedPannelElementOfItem = By.xpath(xPathOfSelectedPannelElementOfItem);
-        selectedPannelItem = By.xpath(xPathOfSelectedPannelElementOfItem.concat("//ancestor::div[1]"));
-
-        driver.get(BASE_URL);
-        WebElement webElement = driver.findElement(baseTabButtonForms);
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", webElement);
-        webElement.click();
+    public ElementCheckBox() {
+        selectedPannelElementOfItem = $x("//li/span[@class='text' and text()='Practice Form']");
+        selectedPannelItem = $x("//li/span[@class='text' and text()='Practice Form']".concat("//ancestor::div[1]"));
+        open(BASE_URL);
+        baseTabButtonForms.scrollIntoView(true).click();
     }
 
     public ElementCheckBox checkFormsPageTitle() {
-        assertThat(driver.findElement(pageTitleName).getText().equals("Forms")).isTrue();
+        assertThat(pageTitleName.getText().equals("Forms")).isTrue();
 
 
 //        Date d = new Date(1);
@@ -57,59 +53,39 @@ public class ElementCheckBox extends BasePage {
     }
 
     public ElementCheckBox checkSuggestionToSelectItemText() {
-        assertThat(driver.findElement(selectItemSuggestionText).getText().equals("Please select an item from left to start practice.")).isTrue();
+        assertThat(selectItemSuggestionText.getText().equals("Please select an item from left to start practice.")).isTrue();
         return this;
     }
 
     public ElementCheckBox checkFormElementOfPannelToBeOpened() {
-        assertThat(driver.findElement(selectedPannelElementOfItem).isDisplayed()).isTrue();
-        assertThat(driver.findElement(selectedPannelItem).getAttribute("class").equals("element-list collapse show")).isTrue();
+        assertThat(selectedPannelElementOfItem.isDisplayed()).isTrue();
+        assertThat(selectedPannelItem.getAttribute("class").equals("element-list collapse show")).isTrue();
         return this;
-
     }
 
     @Step("STEP!!!")
     public ElementCheckBox clickForm() {
-        driver.findElement(selectedPannelElementOfItem).click();
+        selectedPannelElementOfItem.click();
         return this;
-
     }
-
     public ElementCheckBox fillTheFormFields() {
-        driver.findElement(firstNameField).sendKeys("Nick");
-        driver.findElement(lastNameField).sendKeys("Evans");
-        driver.findElement(emailField).sendKeys("test@test.com");
-        // driver.findElement(genderRadioButton).click();
-        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", driver.findElement(By.cssSelector("#gender-radio-1")));
-        // driver.execute_script("arguments[0].click();", driver.findElement("//input[@name = 'gender"]'"))
-
-        driver.findElement(mobileField).sendKeys("7777777777");
-        driver.findElement(subjectsField).sendKeys("Math");
-        driver.findElement(hobbiesField).isSelected();
-        //driver.findElement(pictureField).sendKeys("Math");
-        //  driver.findElement(subjectsField).sendKeys("Math");
-        SelectDay selectDay = new SelectDay();
-        //selectDay.selectDay(driver, "September", 7);
-
-//        driver.findElement(pictureField).sendKeys("C:/Users/toosm/IdeaProjects/NewProjectJenkins/src/main/resources/PicturesToDownload/pic1.png");
-        driver.findElement(pictureField).sendKeys(new File("src/main/resources/qweqweqwe.png").getAbsolutePath());
+        firstNameField.sendKeys("Nick");
+        lastNameField.sendKeys("Evans");
+        emailField.sendKeys("test@test.com");
+        ((JavascriptExecutor) WebDriverRunner.getWebDriver()).executeScript("arguments[0].click();", $("#gender-radio-1"));
+        mobileField.sendKeys("7777777777");
+        subjectsField.sendKeys("Math");
+        hobbiesField.isSelected();
+        pictureField.sendKeys(new File("src/main/resources/qweqweqwe.png").getAbsolutePath());
         return this;
 
     }
 
     public ElementCheckBox clickSubmitButton() {
-//        JavascriptExecutor executor = (JavascriptExecutor)driver;
-//        executor.executeScript("document.body.style.zoom = '0.6'");
-//        driver.findElement(By.cssSelector("#submit")).click();
-//        Actions actions = new Actions(driver);
-//
-//        actions.moveToElement(driver.findElement(By.cssSelector("#submit"))).click().perform();
-//        executor.executeScript("document.body.style.zoom = '1.0'");
-        driver.findElement(By.cssSelector("#submit")).sendKeys(Keys.ENTER);
-        driver.findElement(By.cssSelector(".modal-content")).isDisplayed();
-        driver.findElement(By.cssSelector("#closeLargeModal")).isDisplayed();
-        driver.findElement(By.cssSelector("#closeLargeModal")).isEnabled();
-
+        $("#submit").sendKeys(Keys.ENTER);
+        $(".modal-content").isDisplayed();
+        $("#closeLargeModal").isDisplayed();
+        $("#closeLargeModal").isEnabled();
         return this;
     }
 
