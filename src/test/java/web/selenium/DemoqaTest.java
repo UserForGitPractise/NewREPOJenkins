@@ -58,7 +58,7 @@ public class DemoqaTest{
     @Story("Log in to the system")
     @Description("Log in and check registered user data")
     public void login() {
-        new ElementsTextBox(driver.get())
+        new ElementsTextBox()
                 .fillInDate()
                 .clickSubmitButton()
                 .checkRegisteredUserData();
@@ -69,7 +69,7 @@ public class DemoqaTest{
     @Story("User form to be viewable")
     @Description("Check Page Form title, check text (suggested to select item), check form element of panel to be Opened")
     public void checkFormsPageElementView() {
-        new ElementCheckBox(driver.get())
+        new ElementCheckBox()
                 .checkFormsPageTitle()
                 .checkSuggestionToSelectItemText()
                 .checkFormElementOfPannelToBeOpened();
@@ -80,7 +80,7 @@ public class DemoqaTest{
     @Story("Implementation of practise form")
     @Description("Check filling in form fields and click Submit Button")
     public void fillInThePracticeForm() {
-        new ElementCheckBox(driver.get())
+        new ElementCheckBox()
                 .clickForm()
                 .fillTheFormFields()
         .clickSubmitButton()

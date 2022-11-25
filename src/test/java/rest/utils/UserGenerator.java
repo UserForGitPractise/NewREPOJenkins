@@ -6,14 +6,14 @@ import rest.pojos.UpdateUserRequest;
 public class UserGenerator {
     public static CreateUserRequest createSimpleUser (){
         CreateUserRequest user = new CreateUserRequest();
-        user.setName("simple");
-        user.setJob("automation");
+        user.setName("Ivan");
+        user.setJob("Developer");
         return user;
     }
     public static CreateUserRequest createComplexUser(){
         CreateUserRequest user = new CreateUserRequest();
-        user.setName("complex");
-        user.setJob("automation");
+        user.setName("Nick");
+        user.setJob("QA");
         return user;
     }
     public static UpdateUserRequest updateSimpleUser(){

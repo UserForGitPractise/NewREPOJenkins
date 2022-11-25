@@ -9,35 +9,43 @@ import org.junit.jupiter.api.*;
 import rest.pojos.*;
 import rest.utils.RestWrapper;
 import rest.utils.UserGenerator;
+import rest.utils.UserOperations.GetAllUsersList;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static rest.utils.RestWrapper.loginAs;
+import static rest.utils.UserGenerator.createSimpleUser;
+import static rest.utils.UserOperations.GetAllUsersList.*;
 
 @Tag("rest-api-tests")
 @DisplayName("Tests for API check")
 @Feature("API Implementaion for users management")
 public class RestTests {
     private static RestWrapper api;
-
     @BeforeAll
     public static void prepareClient() {
-        api = RestWrapper.
-                loginAs("eve.holt@reqres.in", "cityslicks");
+        api = loginAs("eve.holt@reqres.in", "cityslicks");
     }
 
     @Test
     @DisplayName("Getting list of existing users")
     @Story("User Creation")
     public void getUsers() {
-        List<Users> user = api.getUser.getUsers();
-        assertThat(user).isNotNull().extracting(Users::getEmail).containsOnlyOnce("janet.weaver@reqres.in");
-        assertThat(user).isNotNull().extracting(Users::getfirstName).containsOnlyOnce("Janet");
-        assertThat(user).isNotNull().extracting(Users::getlastName).containsOnlyOnce("Weaver");
+        List<Users> usersList = api.getUser.getUsers();
+        int index = 0;
+        for (Users user :
+                usersList) {
+                assertThat(user).isNotNull().extracting(Users::getEmail).isEqualTo(getAllUsersEmail(index));
+                assertThat(user).isNotNull().extracting(Users::getfirstName).isEqualTo(getAllUsersName(index));
+                assertThat(user).isNotNull().extracting(Users::getlastName).isEqualTo(getAllUsersLastname(index));
+                index++;
+        }
     }
 
     @Test
@@ -45,13 +53,13 @@ public class RestTests {
     @Story("User Creation")
     @Description("Create user and check that user is created with required parameters")
     public void createUser() {
-        CreateUserRequest rq = UserGenerator.createSimpleUser();
+        CreateUserRequest rq = createSimpleUser();
         CreateUserResponse user = api.createUser.createUser(rq);
         assertThat(user).isNotNull().extracting(CreateUserResponse::getName).isEqualTo(rq.getName());
         assertThat(user).isNotNull().extracting(CreateUserResponse::getJob).isEqualTo(rq.getJob());
         assertThat(user).isNotNull().extracting(CreateUserResponse::getCreatedAt).isEqualTo(user.getCreatedAt());
-        assertTrue(IntStream.range(1,1000).anyMatch(i -> i==user.getId()));
         assertThat(user.getId()).isNotNull();
+        assertTrue(IntStream.range(1,1000).anyMatch(i -> i==user.getId()));
     }
     @Test
     @DisplayName("Check list of users params implementaion")

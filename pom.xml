@@ -50,8 +50,6 @@
             <version>3.30.0</version>
             <type>pom</type>
         </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.jdbi/jdbi3-core -->
         <dependency>
             <groupId>org.jdbi</groupId>
             <artifactId>jdbi3-core</artifactId>
