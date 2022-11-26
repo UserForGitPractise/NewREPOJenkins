@@ -30,15 +30,4 @@ public class UserGetOperations extends BaseTest {
                 .jsonPath()
                 .getList("data", Users.class);
     }
-
-    public Users getSingleUser() {
-        return given().spec(REQ_SPEC)
-                .basePath("users/2")
-                .when()
-                .get()
-                .then()
-                .extract()
-                .jsonPath()
-                .getObject("data", Users.class);
-    }
 }

@@ -8,6 +8,16 @@ import io.qameta.allure.Step;
 @JsonIgnoreProperties(ignoreUnknown = true)
 
 public class Users {
+    public Users(int id, String email, String firstName, String lastName) {
+        this.id = id;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+    public Users() {
+
+    }
+
     private int id;
     private String email;
     @JsonProperty("first_name")
@@ -50,5 +60,15 @@ public class Users {
 
     public void setlastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    @Override
+    public String toString() {
+        return "Users{" +
+                "id=" + id +
+                ", email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
     }
 }

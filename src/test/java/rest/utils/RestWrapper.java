@@ -1,25 +1,16 @@
 package rest.utils;
 
-import io.qameta.allure.Step;
-import io.restassured.RestAssured;
-import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
-import io.restassured.http.Cookies;
-import io.restassured.specification.RequestSpecification;
-import rest.pojos.*;
 import rest.pojos.*;
 import rest.utils.UserOperations.UserCreateOperations;
 import rest.utils.UserOperations.UserGetOperations;
-import rest.utils.UserOperations.UserUpdateOperations;
-
-import java.util.List;
+import rest.utils.UserOperations.SingleUserOperations;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
 
 public class RestWrapper extends BaseTest {
     public UserCreateOperations createUser;
-    public UserUpdateOperations updateUser;
+    public SingleUserOperations singleUserOperations;
     public UserGetOperations getUser;
     @Override
     public String getPath() {
@@ -28,7 +19,7 @@ public class RestWrapper extends BaseTest {
     private RestWrapper(String token) {
         super(token);
         createUser = new UserCreateOperations(token);
-        updateUser = new UserUpdateOperations(token);
+        singleUserOperations = new SingleUserOperations(token);
         getUser = new UserGetOperations(token);
     }
     public static RestWrapper loginAs(String login, String password) {

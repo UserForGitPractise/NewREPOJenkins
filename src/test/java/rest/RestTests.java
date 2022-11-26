@@ -3,21 +3,22 @@ package rest;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.*;
 import rest.pojos.*;
 import rest.utils.RestWrapper;
 import rest.utils.UserGenerator;
-import rest.utils.UserOperations.GetAllUsersList;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
-import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static rest.utils.RestWrapper.loginAs;
 import static rest.utils.UserGenerator.createSimpleUser;
@@ -28,9 +29,18 @@ import static rest.utils.UserOperations.GetAllUsersList.*;
 @Feature("API Implementaion for users management")
 public class RestTests {
     private static RestWrapper api;
+
     @BeforeAll
     public static void prepareClient() {
         api = loginAs("eve.holt@reqres.in", "cityslicks");
+    }
+    @ParameterizedTest
+    @MethodSource("rest.utils.UserOperations.GetAllUsersList#allUsersStream")
+    public void getUsers(Users user) {
+        assertThat(api.singleUserOperations.getSingleUser(user.getId())).extracting(Users::getId).isEqualTo(user.getId());
+        assertThat(api.singleUserOperations.getSingleUser(user.getId())).extracting(Users::getEmail).isEqualTo(user.getEmail());
+        assertThat(api.singleUserOperations.getSingleUser(user.getId())).extracting(Users::getfirstName).isEqualTo(user.getfirstName());
+        assertThat(api.singleUserOperations.getSingleUser(user.getId())).extracting(Users::getlastName).isEqualTo(user.getlastName());
     }
 
     @Test
@@ -41,10 +51,11 @@ public class RestTests {
         int index = 0;
         for (Users user :
                 usersList) {
-                assertThat(user).isNotNull().extracting(Users::getEmail).isEqualTo(getAllUsersEmail(index));
-                assertThat(user).isNotNull().extracting(Users::getfirstName).isEqualTo(getAllUsersName(index));
-                assertThat(user).isNotNull().extracting(Users::getlastName).isEqualTo(getAllUsersLastname(index));
-                index++;
+            assertThat(api.getUser.getUsers()).extracting(Users::getId).containsExactly(1, 2, 3, 4, 5, 6);
+            assertThat(user).isNotNull().extracting(Users::getEmail).isEqualTo(getAllUsersEmail(index));
+            assertThat(user).isNotNull().extracting(Users::getfirstName).isEqualTo(getAllUsersName(index));
+            assertThat(user).isNotNull().extracting(Users::getlastName).isEqualTo(getAllUsersLastname(index));
+            index++;
         }
     }
 
@@ -52,16 +63,17 @@ public class RestTests {
     @DisplayName("User Creation")
     @Story("User Creation")
     @Description("Create user and check that user is created with required parameters")
-    public void createUser() {
+    public void checkCreatedUserParameters(int id) {
         CreateUserRequest rq = createSimpleUser();
         CreateUserResponse user = api.createUser.createUser(rq);
         assertThat(user).isNotNull().extracting(CreateUserResponse::getName).isEqualTo(rq.getName());
         assertThat(user).isNotNull().extracting(CreateUserResponse::getJob).isEqualTo(rq.getJob());
         assertThat(user).isNotNull().extracting(CreateUserResponse::getCreatedAt).isEqualTo(user.getCreatedAt());
         assertThat(user.getId()).isNotNull();
-        assertTrue(IntStream.range(1,1000).anyMatch(i -> i==user.getId()));
+        assertTrue(IntStream.range(1, 1000).anyMatch(i -> i == user.getId()));
     }
-    @Test
+ /*   @Deprecated
+    //@Test
     @DisplayName("Check list of users params implementaion")
     @Story("User Params implementaion")
     @Description("Some text for a beatiful description")
@@ -69,26 +81,17 @@ public class RestTests {
         assertThat(api.getUser.getUsers()).extracting(Users::getId).containsExactly(1, 2, 3, 4, 5, 6);
         assertThat(api.getUser.getUsers()).extracting(Users::getfirstName).containsExactly("George", "Janet", "Emma", "Eve", "Charles", "Tracey");
         assertThat(api.getUser.getUsers()).extracting(Users::getlastName).containsExactly("Bluth", "Weaver", "Wong", "Holt", "Morris", "Ramos");
-    }
+    }*/
 
     @Test
     @DisplayName("Check update of list of users params implementaion")
     @Story("User Params implementaion")
     @Description("Some text for a beatiful description")
-    public void checkUpdateUserParamaters() {
-        UpdateUserRequest ur = UserGenerator.updateSimpleUser();
-        assertThat(api.updateUser.updateUser(ur)).extracting(UpdateUserResponce::getName).isEqualTo(ur.getName());
-        assertThat(api.updateUser.updateUser(ur)).extracting(UpdateUserResponce::getJob).isEqualTo(ur.getJob());
-    }
-
-    @Test
-    @DisplayName("Check single user params implementaion")
-    @Story("User Params implementaion")
-    @Description("Some text for a beatiful description")
-    public void checkGetSingleUserParameters() {
-        assertThat(api.getUser.getSingleUser()).extracting(Users::getId).isEqualTo(2);
-        assertThat(api.getUser.getSingleUser()).extracting(Users::getfirstName).isEqualTo("Janet");
-        assertThat(api.getUser.getSingleUser()).extracting(Users::getlastName).isEqualTo("Weaver");
+    public void checkUpdatedUserParamaters() {
+        UpdateUserRequest urq = UserGenerator.updateSimpleUser();
+        UpdateUserResponce urs = api.singleUserOperations.updateUser(urq);
+        assertThat(urs).extracting(UpdateUserResponce::getName).isEqualTo(urq.getName());
+        assertThat(urs).extracting(UpdateUserResponce::getJob).isEqualTo(urq.getJob());
     }
 
     @Test
@@ -97,8 +100,8 @@ public class RestTests {
     @Description("Some text for a beatiful description")
     public void checkPatchUserParameters() {
         UpdateUserRequest ur = UserGenerator.patchSimpleUser();
-        assertThat(api.updateUser.patchUser(ur)).extracting(UpdateUserResponce::getName).isEqualTo(ur.getName());
-        assertThat(api.updateUser.patchUser(ur)).extracting(UpdateUserResponce::getJob).isEqualTo(ur.getJob());
+        assertThat(api.singleUserOperations.patchUser(ur)).extracting(UpdateUserResponce::getName).isEqualTo(ur.getName());
+        assertThat(api.singleUserOperations.patchUser(ur)).extracting(UpdateUserResponce::getJob).isEqualTo(ur.getJob());
     }
 
     @Test
@@ -106,7 +109,7 @@ public class RestTests {
     @Story("User delete")
     @Description("Delete an existing user")
     public void deleteUser() {
-        api.updateUser.deleteUser();
+        api.singleUserOperations.deleteUser();
     }
 }
 
