@@ -22,7 +22,6 @@ public class DemoqaTest {
 
     @BeforeAll
     public static void chromeDriverSetUp() {
-
         try {
             if (System.getProperty("driver").equals("linux")) {
                 System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver_linux");
@@ -32,8 +31,6 @@ public class DemoqaTest {
         } catch (NullPointerException e) {
             System.out.println("OC for chromedriver is not set up");
         }
-
-
     }
 
     @BeforeEach
@@ -42,7 +39,6 @@ public class DemoqaTest {
         //ChromeOptions options1 = new ChromeOptions();
         // driver.set(new RemoteWebDriver(new URL("http://localhost:4445/wd/hub"),options1));
         driver.set(new ChromeDriver(options));
-//        //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(12)); - неявное или безусловное ожидание
     }
 
 
