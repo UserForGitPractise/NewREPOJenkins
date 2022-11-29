@@ -8,35 +8,49 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.*;
+import org.junit.jupiter.params.provider.MethodSource;
 import rest.pojos.*;
 import rest.utils.RestWrapper;
-import rest.utils.UserGenerator;
 
 import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static rest.utils.RestWrapper.loginAs;
-import static rest.utils.UserGenerator.createSimpleUser;
+import static rest.utils.UserGenerator.*;
 import static rest.utils.UserOperations.GetAllUsersList.*;
 
-@Tag("rest-api-tests")
+@Tag("йцу")
 @DisplayName("Tests for API check")
 @Feature("API Implementaion for users management")
 public class RestTests {
     private static RestWrapper api;
 
+    public static Stream<CreateUserRequest> userCreateProvider() {
+        return Stream.of(createDeveloper(), createQA(), createDevOps(), createManager());
+    }
+
+    public static Stream<UpdateUserRequest> userUpdateProvider() {
+        return Stream.of(updateToDeveloper(), updateToQA(), updateToDevOps(), updateToManager());
+    }
+
+    public static Stream<UpdateUserRequest> userPatchProvider() {
+        return Stream.of(addSkillDeveloper(), addSkillQA(), addSkillDevOps(), addSkillManager());
+    }
+
     @BeforeAll
-    public static void prepareClient() {
+    public static void prepareUser() {
         api = loginAs("eve.holt@reqres.in", "cityslicks");
     }
-    @ParameterizedTest
+
+    @ParameterizedTest(name = "Get single user and verify params. {0}")
+//    @DisplayName("Get single user and verify params")
     @MethodSource("rest.utils.UserOperations.GetAllUsersList#allUsersStream")
-    public void getUsers(Users user) {
+    @Description("Send get-single request and verify ID, Email, First Name and Last Name Parameters")
+    @Story("Get user")
+    public void getSingleUser(Users user) {
         assertThat(api.singleUserOperations.getSingleUser(user.getId())).extracting(Users::getId).isEqualTo(user.getId());
         assertThat(api.singleUserOperations.getSingleUser(user.getId())).extracting(Users::getEmail).isEqualTo(user.getEmail());
         assertThat(api.singleUserOperations.getSingleUser(user.getId())).extracting(Users::getfirstName).isEqualTo(user.getfirstName());
@@ -44,8 +58,9 @@ public class RestTests {
     }
 
     @Test
-    @DisplayName("Getting list of existing users")
-    @Story("User Creation")
+    @DisplayName("Get all existing users and verify params")
+    @Description("Send get-all-existing-users request and verify each user ID, Email, First Name and Last Name parameters")
+    @Story("Get user")
     public void getUsers() {
         List<Users> usersList = api.getUser.getUsers();
         int index = 0;
@@ -59,12 +74,12 @@ public class RestTests {
         }
     }
 
-    @Test
-    @DisplayName("User Creation")
-    @Story("User Creation")
-    @Description("Create user and check that user is created with required parameters")
-    public void checkCreatedUserParameters(int id) {
-        CreateUserRequest rq = createSimpleUser();
+    @ParameterizedTest(name = "Create user and verify params. {0}")
+    @MethodSource("userCreateProvider")
+    //  @DisplayName("Create user and verify params")
+    @Description("Send user create request and verify Name, Job, CreatedAt and ID parameters of created user")
+    @Story("Create SINGLE user")
+    public void checkCreatedDeveloperParameters(CreateUserRequest rq) {
         CreateUserResponse user = api.createUser.createUser(rq);
         assertThat(user).isNotNull().extracting(CreateUserResponse::getName).isEqualTo(rq.getName());
         assertThat(user).isNotNull().extracting(CreateUserResponse::getJob).isEqualTo(rq.getJob());
@@ -72,42 +87,33 @@ public class RestTests {
         assertThat(user.getId()).isNotNull();
         assertTrue(IntStream.range(1, 1000).anyMatch(i -> i == user.getId()));
     }
- /*   @Deprecated
-    //@Test
-    @DisplayName("Check list of users params implementaion")
-    @Story("User Params implementaion")
-    @Description("Some text for a beatiful description")
-    public void checkUsersParameters() {
-        assertThat(api.getUser.getUsers()).extracting(Users::getId).containsExactly(1, 2, 3, 4, 5, 6);
-        assertThat(api.getUser.getUsers()).extracting(Users::getfirstName).containsExactly("George", "Janet", "Emma", "Eve", "Charles", "Tracey");
-        assertThat(api.getUser.getUsers()).extracting(Users::getlastName).containsExactly("Bluth", "Weaver", "Wong", "Holt", "Morris", "Ramos");
-    }*/
 
-    @Test
-    @DisplayName("Check update of list of users params implementaion")
-    @Story("User Params implementaion")
-    @Description("Some text for a beatiful description")
-    public void checkUpdatedUserParamaters() {
-        UpdateUserRequest urq = UserGenerator.updateSimpleUser();
-        UpdateUserResponce urs = api.singleUserOperations.updateUser(urq);
-        assertThat(urs).extracting(UpdateUserResponce::getName).isEqualTo(urq.getName());
-        assertThat(urs).extracting(UpdateUserResponce::getJob).isEqualTo(urq.getJob());
+    @ParameterizedTest(name = "Update user and verify params. {0}")
+    @MethodSource("userUpdateProvider")
+    // @DisplayName("Update user and verify params")
+    @Description("Send update-request and verify Name and Job of updated user")
+    @Story("Update SINGLE user")
+    public void checkUpdatedUserParamaters(UpdateUserRequest urq) {
+        UpdateOrPatchUserResponse urs = api.singleUserOperations.updateUser(urq);
+        assertThat(urs).extracting(UpdateOrPatchUserResponse::getName).isEqualTo(urq.getName());
+        assertThat(urs).extracting(UpdateOrPatchUserResponse::getJob).isEqualTo(urq.getJob());
+    }
+
+    @ParameterizedTest(name = "Patch user and verify params. {0}")
+    @MethodSource("userPatchProvider")
+    //@DisplayName("Patch user and verify params")
+    @Description("Send patch-request and verify Name and Job of patched user")
+    @Story("Update SINGLE user")
+    public void checkPatchUserParameters(UpdateUserRequest urq) {
+        UpdateOrPatchUserResponse urs = api.singleUserOperations.patchUser(urq);
+        assertThat(urs).extracting(UpdateOrPatchUserResponse::getName).isEqualTo(urq.getName());
+        assertThat(urs).extracting(UpdateOrPatchUserResponse::getJob).isEqualTo(urq.getJob());
     }
 
     @Test
-    @Story("Some text for a beutiful story view")
-    @DisplayName("Check pactched user parameters")
-    @Description("Some text for a beatiful description")
-    public void checkPatchUserParameters() {
-        UpdateUserRequest ur = UserGenerator.patchSimpleUser();
-        assertThat(api.singleUserOperations.patchUser(ur)).extracting(UpdateUserResponce::getName).isEqualTo(ur.getName());
-        assertThat(api.singleUserOperations.patchUser(ur)).extracting(UpdateUserResponce::getJob).isEqualTo(ur.getJob());
-    }
-
-    @Test
-    @DisplayName("User deletion")
-    @Story("User delete")
-    @Description("Delete an existing user")
+    @DisplayName("Delete user")
+    @Description("Send delete-request and verify status code")
+    @Story("Delete SIGNLE user")
     public void deleteUser() {
         api.singleUserOperations.deleteUser();
     }

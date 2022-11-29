@@ -1,6 +1,5 @@
 package rest.utils.UserOperations;
 
-import io.qameta.allure.Step;
 import io.restassured.RestAssured;
 import rest.pojos.CreateUserRequest;
 import rest.pojos.CreateUserResponse;
@@ -15,7 +14,7 @@ public class UserCreateOperations extends BaseTest {
     public String getPath() {
         return "/users";
     }
-    @Step("Create User")
+
     public CreateUserResponse createUser(CreateUserRequest rq) {
         return RestAssured.given().spec(REQ_SPEC)
                 .body(rq)

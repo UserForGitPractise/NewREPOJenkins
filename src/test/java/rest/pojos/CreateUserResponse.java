@@ -10,12 +10,13 @@ import java.util.Date;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class CreateUserResponse {
-    private  String name;
-    private  String job;
+    private String name;
+    private String job;
     private int id;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     @JsonDeserialize(using = DateTimeDeserializer.class)
     private LocalDateTime createdAt;
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
@@ -47,8 +48,10 @@ public class CreateUserResponse {
     public void setId(int id) {
         this.id = id;
     }
+
     Date date = new Date();
-    public void ads(){
+
+    public void ads() {
         date.getTime();
     }
 }

@@ -6,9 +6,8 @@ import io.restassured.filter.log.LogDetail;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
-import org.hamcrest.Matcher;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.notNullValue;
 
 public abstract class BaseTest {
     protected static final String BASE_URL = "https://reqres.in/api";
@@ -16,9 +15,9 @@ public abstract class BaseTest {
     protected ResponseSpecification RES_SPEC;
 
     protected abstract String getPath();
+
     public BaseTest(String token) {
         RES_SPEC = new ResponseSpecBuilder()
-                .expectStatusCode(Integer.parseInt(String.valueOf(startsWith("20"))))
                 .expectBody(notNullValue())
                 .log(LogDetail.ALL)
                 .build();

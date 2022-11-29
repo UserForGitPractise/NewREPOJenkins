@@ -1,7 +1,7 @@
 package rest.utils.UserOperations;
 
+import rest.pojos.UpdateOrPatchUserResponse;
 import rest.pojos.UpdateUserRequest;
-import rest.pojos.UpdateUserResponce;
 import rest.pojos.Users;
 import rest.utils.BaseTest;
 
@@ -11,6 +11,8 @@ public class SingleUserOperations extends BaseTest {
     public SingleUserOperations(String token) {
         super(token);
     }
+
+    private static final int userStubId = 2;
 
     @Override
     public String getPath() {
@@ -29,32 +31,32 @@ public class SingleUserOperations extends BaseTest {
                 .getObject("data", Users.class);
     }
 
-    public UpdateUserResponce updateUser(UpdateUserRequest ur) {
+    public UpdateOrPatchUserResponse updateUser(UpdateUserRequest ur) {
         return given().spec(REQ_SPEC)
-                .basePath(getPath() + 2)
+                .basePath(getPath() + userStubId)
                 .body(ur)
                 .put()
                 .then()
                 .spec(RES_SPEC)
                 .extract()
-                .as(UpdateUserResponce.class);
+                .as(UpdateOrPatchUserResponse.class);
     }
 
-    public UpdateUserResponce patchUser(UpdateUserRequest ur) {
+    public UpdateOrPatchUserResponse patchUser(UpdateUserRequest ur) {
         return given().spec(REQ_SPEC)
-                .basePath(getPath() + 2)
+                .basePath(getPath() + userStubId)
                 .body(ur)
                 .patch()
                 .then()
                 .spec(RES_SPEC)
                 .extract()
-                .as(UpdateUserResponce.class);
+                .as(UpdateOrPatchUserResponse.class);
     }
 
     public void deleteUser() {
         given()
                 .spec(REQ_SPEC)
-                .basePath(getPath() + 2)
+                .basePath(getPath() + userStubId)
                 .delete()
                 .then()
                 .spec(RES_SPEC)

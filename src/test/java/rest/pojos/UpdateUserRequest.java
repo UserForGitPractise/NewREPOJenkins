@@ -19,4 +19,11 @@ public class UpdateUserRequest {
     public void setJob(String job) {
         this.job = job;
     }
+
+    @Override
+    public String toString() {
+        return "name='" + name + '\'' +
+                ", job='" + job + '\'' +
+                '}';
+    }
 }

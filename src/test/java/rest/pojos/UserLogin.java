@@ -2,10 +2,11 @@ package rest.pojos;
 
 public class UserLogin {
 
-    public UserLogin (String username, String password){
-        this.username= username;
-        this.password=password;
+    public UserLogin(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
+
     private String username;
     private String password;
 

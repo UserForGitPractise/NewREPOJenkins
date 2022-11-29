@@ -3,7 +3,6 @@ package rest.pojos;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.qameta.allure.Step;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 
@@ -14,6 +13,7 @@ public class Users {
         this.firstName = firstName;
         this.lastName = lastName;
     }
+
     public Users() {
 
     }
@@ -33,15 +33,14 @@ public class Users {
         this.id = id;
     }
 
-    @Step ("Getting user email")
     public String getEmail() {
         return email;
     }
 
-    @Step("Возвращено false")
-    public boolean falseReturner(){
+    public boolean falseReturner() {
         return false;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -64,11 +63,11 @@ public class Users {
 
     @Override
     public String toString() {
-        return "Users{" +
-                "id=" + id +
-                ", email='" + email + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                '}';
+        return "User (" +
+                id + ", " +
+                firstName + ", " +
+                lastName + ", " +
+                email +
+                ")";
     }
 }

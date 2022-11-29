@@ -16,7 +16,7 @@ import java.net.MalformedURLException;
 @Tag("web-tests")
 @DisplayName("Tests for UI check")
 @Feature("UI Implementaion of forms")
-public class DemoqaTest{
+public class DemoqaTest {
     ChromeOptions options = new ChromeOptions();
     ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
@@ -29,7 +29,7 @@ public class DemoqaTest{
             } else {
                 System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/chromedriver.exe");
             }
-        } catch (NullPointerException e){
+        } catch (NullPointerException e) {
             System.out.println("OC for chromedriver is not set up");
         }
 
@@ -40,7 +40,7 @@ public class DemoqaTest{
     public void driverStart() throws MalformedURLException {
         //options.addArguments("--headless","--no-gpu");
         //ChromeOptions options1 = new ChromeOptions();
-       // driver.set(new RemoteWebDriver(new URL("http://localhost:4445/wd/hub"),options1));
+        // driver.set(new RemoteWebDriver(new URL("http://localhost:4445/wd/hub"),options1));
         driver.set(new ChromeDriver(options));
 //        //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(12)); - неявное или безусловное ожидание
     }
@@ -83,7 +83,7 @@ public class DemoqaTest{
         new ElementCheckBox()
                 .clickForm()
                 .fillTheFormFields()
-        .clickSubmitButton()
+                .clickSubmitButton()
         ;
     }
 

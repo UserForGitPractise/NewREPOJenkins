@@ -2,7 +2,6 @@ package web.selenium.pages;
 
 import com.codeborne.selenide.SelenideElement;
 import com.codeborne.selenide.WebDriverRunner;
-import io.qameta.allure.Step;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 
@@ -18,7 +17,7 @@ public class ElementCheckBox extends BasePage {
     private SelenideElement selectedPannelItem;
 
     private SelenideElement firstNameField = $("#firstName");
-    private SelenideElement lastNameField =$("#lastName");
+    private SelenideElement lastNameField = $("#lastName");
     private SelenideElement emailField = $("#userEmail");
     private SelenideElement genderRadioButton = $("#gender-radio-1");
     private SelenideElement mobileField = $("#userNumber");
@@ -63,11 +62,11 @@ public class ElementCheckBox extends BasePage {
         return this;
     }
 
-    @Step("STEP!!!")
     public ElementCheckBox clickForm() {
         selectedPannelElementOfItem.click();
         return this;
     }
+
     public ElementCheckBox fillTheFormFields() {
         firstNameField.sendKeys("Nick");
         lastNameField.sendKeys("Evans");
