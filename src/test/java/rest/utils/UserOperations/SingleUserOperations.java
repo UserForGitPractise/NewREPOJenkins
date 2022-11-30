@@ -1,5 +1,6 @@
 package rest.utils.UserOperations;
 
+import io.qameta.allure.Step;
 import rest.pojos.UpdateOrPatchUserResponse;
 import rest.pojos.UpdateUserRequest;
 import rest.pojos.Users;
@@ -19,6 +20,7 @@ public class SingleUserOperations extends BaseTest {
         return "/users/";
     }
 
+    @Step("Send get request to get {0} user")
     public Users getSingleUser(int userID) {
         return given().spec(REQ_SPEC)
                 .basePath(getPath() + userID)
@@ -31,6 +33,7 @@ public class SingleUserOperations extends BaseTest {
                 .getObject("data", Users.class);
     }
 
+    @Step("Update user and verify params of updated user {0}")
     public UpdateOrPatchUserResponse updateUser(UpdateUserRequest ur) {
         return given().spec(REQ_SPEC)
                 .basePath(getPath() + userStubId)
@@ -42,6 +45,7 @@ public class SingleUserOperations extends BaseTest {
                 .as(UpdateOrPatchUserResponse.class);
     }
 
+    @Step("Update user skills and verify params of updated user {0}")
     public UpdateOrPatchUserResponse patchUser(UpdateUserRequest ur) {
         return given().spec(REQ_SPEC)
                 .basePath(getPath() + userStubId)
@@ -53,6 +57,7 @@ public class SingleUserOperations extends BaseTest {
                 .as(UpdateOrPatchUserResponse.class);
     }
 
+    @Step("Delete user and verify status code")
     public void deleteUser() {
         given()
                 .spec(REQ_SPEC)

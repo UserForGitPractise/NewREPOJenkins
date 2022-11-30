@@ -22,8 +22,9 @@ public class UpdateUserRequest {
 
     @Override
     public String toString() {
-        return "name='" + name + '\'' +
-                ", job='" + job + '\'' +
-                '}';
+        return "User (" +
+                name + ", " +
+                job +
+                ')';
     }
 }

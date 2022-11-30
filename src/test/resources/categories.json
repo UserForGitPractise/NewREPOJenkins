@@ -1,0 +1,31 @@
+[
+  {
+    "name": "Get user request failed",
+    "matchedStatuses": ["failed"],
+    "traceRegex": ".*getUsers.*"
+  },
+  {
+    "name": "Create user request failed",
+    "matchedStatuses": ["failed"],
+    "traceRegex": ".*createUser.*"
+  },
+  {
+    "name": "Update user request failed",
+    "matchedStatuses": ["failed"],
+    "traceRegex": ".*updateUser*"
+  },
+  {
+    "name": "Patch user request failed",
+    "matchedStatuses": ["failed"],
+    "traceRegex": ".*patchUser.*"
+  },
+  {
+    "name": "Delete user request failed",
+    "matchedStatuses": ["failed"],
+    "traceRegex": ".*deleteUser.*"
+  },
+  {
+    "name": "Test defect",
+    "matchedStatuses": ["broken"]
+  }
+]
