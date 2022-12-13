@@ -3,6 +3,7 @@ package web.selenium.pages;
 
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebElement;
 
 import java.util.LinkedList;
@@ -32,7 +33,7 @@ public class ElementsTextBox extends BasePage {
         elementDirectoryButton.click();
         textBoxElementDirectoryButton.click();
     }
-
+    @Step("F")
     public ElementsTextBox fillInDate() {
         userNameBox.sendKeys(LOGIN);
         emailBox.sendKeys(EMAIL);
