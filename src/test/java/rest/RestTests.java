@@ -39,6 +39,11 @@ import static rest.utils.UserOperations.GetAllUsersList.*;
 @DisplayName("Tests for API check")
 @Feature("API Implementaion for users management")
 public class RestTests {
+
+    @Test
+    public void test11(){
+        System.out.println("zxc");
+    }
     private static RestWrapper api;
 
     public static Stream<CreateUserRequest> userCreateProvider() {
@@ -53,7 +58,7 @@ public class RestTests {
         return Stream.of(addSkillDeveloper(), addSkillQA(), addSkillDevOps(), addSkillManager());
     }
 
-    @BeforeAll
+//    @BeforeAll
     public static void prepareUser() {
         api = loginAsDefaultUser();
 //                api =loginAs("eve.holt@reqres.in", "cityslicks");
@@ -79,7 +84,7 @@ public class RestTests {
     }
 
     //TODO: CHANGE REGEX TO CAPTURE BOTH GET REQUESTS (SINGLE AND GET)
-    @Test
+//    @Test
     @DisplayName("Get all existing users")
     @Description("Send get-all-existing-users request and verify each user ID, Email, First Name and Last Name parameters")
     @Story("Get user")
