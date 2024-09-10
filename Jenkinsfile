@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     tools {
-        // Install the Maven version configured as "M3" and add it to the path.
         jdk "18"
         maven "3.9.9"
     }
@@ -17,34 +16,40 @@ pipeline {
                 expression{ return params.rest }
             }
             steps {
-                // Run Maven on a Unix agent.
                 bat "mvn clean test -Dtest=RestTests"
-
-                // To run Maven on a Windows agent, use
-                // bat "mvn -Dmaven.test.failure.ignore=true clean package"
             }
         }
-
         stage('web stests') {
                     when {
-                        expression{ return params.rest }
+                        expression{ return params.web }
                     }
                     steps {
-                        // Run Maven on a Unix agent.
                         bat "mvn clean test -Dtest=RestTests"
-
-                        // To run Maven on a Windows agent, use
-                        // bat "mvn -Dmaven.test.failure.ignore=true clean package"
-
+                }
+        stage('Checkstyle Analysis') {
+                    steps {
+                        // Run Checkstyle analysis with Maven
+                        bat 'mvn checkstyle:checkstyle'
+                    }
                 }
 
-                post{
-                always{
+                stage('Publish Checkstyle Results') {
+                            steps {
+                                // Publish Checkstyle results to Jenkins
+                                // Assuming the Checkstyle report is generated in target/site/checkstyle.xml
+                                recordIssues(tools: [checkStyle(pattern: 'target/site/checkstyle.xml')])
+                            }
+                        }
+
+
+        post{
+            always{
                 allure([
                 reportBuildPolicy: 'ALWAYS',
                 results: [[path: 'allure-results']]
-                ])}
+                ]),
+                archiveArtifacts artifacts: 'target/site/checkstyle.xml', allowEmptyArchive: true}
                 }
+        }
     }
-}
 }
