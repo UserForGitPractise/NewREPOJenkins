@@ -35,13 +35,17 @@ pipeline {
 
                         // To run Maven on a Windows agent, use
                         // bat "mvn -Dmaven.test.failure.ignore=true clean package"
-                    }
+
                 }
 
                 post{
                 always{
                 allure([
                 reportBuildPolicy: 'ALWAYS',
-                results: [[path: 'allure-results'])}}
+                results: [[path: 'allure-results']]
+                ])}
+                }
+
+
     }
 }
