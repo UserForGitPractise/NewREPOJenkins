@@ -48,8 +48,9 @@ pipeline {
                 allure([
                 reportBuildPolicy: 'ALWAYS',
                 results: [[path: 'allure-results']]
-                ]),
-                archiveArtifacts artifacts: 'target/site/checkstyle.xml', allowEmptyArchive: true}
+                ])
+                archiveArtifacts artifacts: 'target/site/checkstyle.xml', allowEmptyArchive: true
+                }
                 }
         }
 
