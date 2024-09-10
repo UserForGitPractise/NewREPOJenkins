@@ -6,6 +6,8 @@ import rest.utils.UserOperations.SingleUserOperations;
 import rest.utils.UserOperations.UserCreateOperations;
 import rest.utils.UserOperations.UserGetOperations;
 
+import java.util.ResourceBundle;
+
 import static io.restassured.RestAssured.given;
 
 public class RestWrapper extends BaseTest {
@@ -33,5 +35,8 @@ public class RestWrapper extends BaseTest {
                         .post()
                         .then()
                         .extract().jsonPath().get("token"));
+    }
+    public static RestWrapper loginAsDefaultUser(){
+       return loginAs(PropsLoader.getProperty("login"),PropsLoader.getProperty("password"));
     }
 }
