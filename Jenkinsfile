@@ -49,7 +49,7 @@ pipeline {
                 reportBuildPolicy: 'ALWAYS',
                 results: [[path: 'allure-results']]
                 ])
-                archiveArtifacts artifacts: 'target/site/checkstyle.xml', allowEmptyArchive: true
+
                 }
                 }
         }
