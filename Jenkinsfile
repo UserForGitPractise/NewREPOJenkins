@@ -25,7 +25,7 @@ pipeline {
             }
         }
 
-        stage('rest stests') {
+        stage('web stests') {
                     when {
                         expression{ return params.rest }
                     }
