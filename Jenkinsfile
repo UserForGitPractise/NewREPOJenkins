@@ -41,17 +41,19 @@ pipeline {
                                 recordIssues(tools: [checkStyle(pattern: 'target/site/checkstyle.xml')])
                             }
                         }
-
-
-        post{
-            always{
-                allure([
-                reportBuildPolicy: 'ALWAYS',
-                results: [[path: 'allure-results']]
-                ])
-
-                }
-                }
-        }
-
 }
+post {
+                always {
+                    // Archive the Checkstyle report
+                    archiveArtifacts artifacts: 'target/site/checkstyle.xml', allowEmptyArchive: true
+
+                    // Publish Allure results
+                    allure([
+                        includeProperties: false,
+                        jdk: '',
+                        results: [[path: 'target/allure-results']]
+                    ])
+                }
+
+        }
+		}
