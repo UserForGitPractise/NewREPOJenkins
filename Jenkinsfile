@@ -45,7 +45,6 @@ pipeline {
                 results: [[path: 'allure-results']]
                 ])}
                 }
-
-
     }
+}
 }
