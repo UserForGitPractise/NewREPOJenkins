@@ -25,7 +25,8 @@ pipeline {
                     }
                     steps {
                         bat "mvn clean test -Dtest=RestTests"
-                }
+                }}
+
         stage('Checkstyle Analysis') {
                     steps {
                         // Run Checkstyle analysis with Maven
@@ -33,7 +34,7 @@ pipeline {
                     }
                 }
 
-                stage('Publish Checkstyle Results') {
+        stage('Publish Checkstyle Results') {
                             steps {
                                 // Publish Checkstyle results to Jenkins
                                 // Assuming the Checkstyle report is generated in target/site/checkstyle.xml
@@ -51,5 +52,5 @@ pipeline {
                 archiveArtifacts artifacts: 'target/site/checkstyle.xml', allowEmptyArchive: true}
                 }
         }
-    }
+
 }
