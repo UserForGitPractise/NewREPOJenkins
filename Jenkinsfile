@@ -45,7 +45,7 @@ pipeline {
 post {
                 always {
                     // Archive the Checkstyle report
-                    archiveArtifacts artifacts: 'target/site/checkstyle.xml', allowEmptyArchive: true
+                    archiveArtifacts artifacts: 'target/checkstyle.xml', allowEmptyArchive: true
 
                     // Publish Allure results
                     allure([
